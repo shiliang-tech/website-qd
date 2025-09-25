@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qd.mapper.CommentMapper">
+
+
+    <select id="pageQuery" resultType="com.qd.vo.CommentVO">
+        SELECT
+        c.id              AS id,
+        c.article_id      AS articleId,
+        c.user_id         AS userId,
+        c.nickname        AS nickname,
+        c.content         AS content,
+        c.parent_id       AS parentId,
+        c.root_id         AS rootId,
+        c.reply_to_user_id AS replyToUserId,
+        c.reply_to_nickname AS replyToNickname,
+        c.level           AS level,
+        c.status          AS status,
+        c.remark          AS remark,
+        c.created_at      AS createdAt,
+        c.updated_at      AS updatedAt
+        FROM comment c
+        <where>
+            c.article_id = #{id}
+            AND c.status = 1
+            AND c.level = 1   <!-- 只查根评论 -->
+        </where>
+        <choose>
+            <when test="commentPageQueryDTO.order == 'desc'">
+                ORDER BY c.created_at DESC
+            </when>
+            <otherwise>
+                ORDER BY c.created_at ASC
+            </otherwise>
+        </choose>
+    </select>
+
+
+    <select id="findByRootIds" resultType="com.qd.vo.CommentVO">
+        SELECT
+        id, article_id AS articleId,
+        user_id AS userId,
+        nickname,
+        content,
+        parent_id AS parentId,
+        root_id AS rootId,
+        reply_to_user_id AS replyToUserId,
+        reply_to_nickname AS replyToNickname,
+        level,
+        status,
+        remark,
+        created_at AS createdAt,
+        updated_at AS updatedAt
+        FROM comment
+        WHERE root_id IN
+        <foreach collection="list" item="rootId" open="(" separator="," close=")">
+            #{rootId}
+        </foreach>
+        AND status = 1
+        AND level = 2
+        ORDER BY created_at ASC
+    </select>
+
+
+
+
+</mapper>
