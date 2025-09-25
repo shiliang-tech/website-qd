@@ -8,19 +8,19 @@ spring:
     allow-circular-references: true
   datasource:
     druid:
-      driver-class-name: ${sky.datasource.driver-class-name}
-      url: jdbc:mysql://${sky.datasource.host}:${sky.datasource.port}/${sky.datasource.database}?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
-      username: ${sky.datasource.username}
-      password: ${sky.datasource.password}
+      driver-class-name: ${qd.datasource.driver-class-name}
+      url: jdbc:mysql://${qd.datasource.host}:${qd.datasource.port}/${qd.datasource.database}?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
+      username: ${qd.datasource.username}
+      password: ${qd.datasource.password}
   redis:
-    host: ${sky.redis.host}
-    port: ${sky.redis.port}
-    password: ${sky.redis.password}
-    database: ${sky.redis.database}
+    host: ${qd.redis.host}
+    port: ${qd.redis.port}
+    password: ${qd.redis.password}
+    database: ${qd.redis.database}
 mybatis:
   #mapper配置文件
   mapper-locations: classpath:mapper/*.xml
-  type-aliases-package: com.sky.entity
+  type-aliases-package: com.qd.entity
   configuration:
     #开启驼峰命名
     map-underscore-to-camel-case: true
@@ -28,12 +28,12 @@ mybatis:
 logging:
   level:
     com:
-      sky:
+      qd:
         mapper: debug
         service: info
         controller: info
 
-sky:
+qd:
   jwt:
     # 设置jwt签名加密时使用的秘钥
     admin-secret-key: itcast
@@ -45,15 +45,15 @@ sky:
     user-ttl: 7200000
     user-token-name: authentication
   alioss:
-    endpoint: ${sky.alioss.endpoint}
-    access-key-id: ${sky.alioss.access-key-id}
-    access-key-secret: ${sky.alioss.access-key-secret}
-    bucket-name: ${sky.alioss.bucket-name}
+    endpoint: ${qd.alioss.endpoint}
+    access-key-id: ${qd.alioss.access-key-id}
+    access-key-secret: ${qd.alioss.access-key-secret}
+    bucket-name: ${qd.alioss.bucket-name}
   wechat:
-    appid: ${sky.wechat.appid}
-    secret: ${sky.wechat.secret}
+    appid: ${qd.wechat.appid}
+    secret: ${qd.wechat.secret}
   shop:
-    address: ${sky.shop.address}
+    address: ${qd.shop.address}
   baidu:
-    ak: ${sky.baidu.ak}
+    ak: ${qd.baidu.ak}
 

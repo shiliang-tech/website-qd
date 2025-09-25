@@ -35,10 +35,10 @@ import java.util.Map;
 @Service
 public class OrderServiceImpl implements OrderService {
 
-    @Value("${sky.shop.address}")
+    @Value("${qd.shop.address}")
     private String shopAddress;
 
-    @Value("${sky.baidu.ak}")
+    @Value("${qd.baidu.ak}")
     private String ak;
 
     @Autowired

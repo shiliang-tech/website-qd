@@ -12,9 +12,9 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @Slf4j
 @EnableCaching
 @EnableScheduling
-public class SkyApplication {
+public class QdApplication {
     public static void main(String[] args) {
-        SpringApplication.run(SkyApplication.class, args);
+        SpringApplication.run(QdApplication.class, args);
         log.info("server started");
     }
 }
