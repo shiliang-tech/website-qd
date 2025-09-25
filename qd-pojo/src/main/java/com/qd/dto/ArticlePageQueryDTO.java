@@ -17,4 +17,7 @@ public class ArticlePageQueryDTO {
     //标签id
     private Integer tagId;
 
+    //排序方式
+    private String  sort;
+
 }
