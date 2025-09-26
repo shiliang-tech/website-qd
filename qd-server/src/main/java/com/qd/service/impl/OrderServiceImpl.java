@@ -131,7 +131,7 @@ public class OrderServiceImpl implements OrderService {
         // 当前登录用户id
         Long userId = BaseContext.getCurrentId();
 
-        User user = userMapper.getById(userId);
+        User1 user = null;
 
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("code", "ORDERPAID");

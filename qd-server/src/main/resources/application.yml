@@ -41,9 +41,9 @@ qd:
     admin-ttl: 7200000
     # 设置前端传递过来的令牌名称
     admin-token-name: token
-    user-secret-key: itheima
+    user-secret-key: shiliang
     user-ttl: 7200000
-    user-token-name: authentication
+    user-token-name: token
   alioss:
     endpoint: ${qd.alioss.endpoint}
     access-key-id: ${qd.alioss.access-key-id}

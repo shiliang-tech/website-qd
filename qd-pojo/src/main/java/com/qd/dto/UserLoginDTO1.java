@@ -1,0 +1,15 @@
+package com.qd.dto;
+
+import lombok.Data;
+
+import java.io.Serializable;
+
+/**
+ * C端用户登录
+ */
+@Data
+public class UserLoginDTO1 implements Serializable {
+
+    private String code;
+
+}

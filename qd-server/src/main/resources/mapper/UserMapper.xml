@@ -4,9 +4,12 @@
 <mapper namespace="com.qd.mapper.UserMapper">
 
     <insert id="createUser" useGeneratedKeys="true" keyProperty="id">
-        insert into user (openid, name, phone, sex, id_number, avatar, create_time)
-        values (#{openid}, #{name}, #{phone}, #{sex}, #{idNumber}, #{avatar}, #{createTime})
+        INSERT INTO user (username, password_hash, email, mobile, nickname, avatar_url, role, role_level, status,
+                          last_login_at, last_login_ip, extra, remark, created_at, updated_at, deleted_at)
+        VALUES (#{username}, #{passwordHash}, #{email}, #{mobile}, #{nickname}, #{avatarUrl}, #{role}, #{roleLevel}, #{status},
+                #{lastLoginAt}, #{lastLoginIp}, #{extra}, #{remark}, #{createdAt}, #{updatedAt}, #{deletedAt})
     </insert>
+
 
     <select id="countByMap" resultType="java.lang.Integer">
         select count(id) from user
