@@ -62,7 +62,40 @@
         ORDER BY created_at ASC
     </select>
 
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO comment (
+            article_id, article_title, user_id, nickname, email,
+            content, parent_id, root_id, reply_to_user_id, reply_to_nickname,
+            level, status, ip, ua, remark, deleted_at
+        ) VALUES (
+                     #{articleId}, #{articleTitle}, #{userId}, #{nickname}, #{email},
+                     #{content}, #{parentId}, #{rootId}, #{replyToUserId}, #{replyToNickname},
+                     #{level}, #{status}, #{ip}, #{ua}, #{remark}, #{deletedAt}
+                 )
+    </insert>
 
+    <update id="update">
+        UPDATE comment
+        <set>
+            <if test="articleTitle != null">article_title = #{articleTitle},</if>
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="nickname != null">nickname = #{nickname},</if>
+            <if test="email != null">email = #{email},</if>
+            <if test="content != null">content = #{content},</if>
+            <if test="parentId != null">parent_id = #{parentId},</if>
+            <if test="rootId != null">root_id = #{rootId},</if>
+            <if test="replyToUserId != null">reply_to_user_id = #{replyToUserId},</if>
+            <if test="replyToNickname != null">reply_to_nickname = #{replyToNickname},</if>
+            <if test="level != null">level = #{level},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="ip != null">ip = #{ip},</if>
+            <if test="ua != null">ua = #{ua},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="updatedAt != null">updated_at = #{updatedAt},</if>
+            <if test="deletedAt != null">deleted_at = #{deletedAt},</if>
+        </set>
+        WHERE id = #{id}
+    </update>
 
 
 </mapper>

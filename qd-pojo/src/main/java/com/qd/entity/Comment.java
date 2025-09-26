@@ -35,7 +35,7 @@ public class Comment {
     private String replyToNickname;
     // 楼层层级，1=根，2=子
     private Integer level;
-    // 评论状态，0=待审,1=通过,2=屏蔽
+    // 评论状态，1=通过,2=屏蔽
     private Integer status;
     // 评论者IP地址
     private String ip;
