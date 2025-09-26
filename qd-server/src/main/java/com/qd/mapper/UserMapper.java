@@ -50,4 +50,19 @@ public interface UserMapper {
      */
     @Select("SELECT * FROM user WHERE email=#{email}")
     User getByEmail(String email);
+
+    /**
+     * 更新用户基本信息
+     * @param user
+     */
+    void update(User user);
+
+    /**
+     * 根据用户名查询用户
+     *
+     * @param username
+     * @return
+     */
+    @Select("SELECT * FROM user WHERE username=#{username}")
+    User getByName(String username);
 }

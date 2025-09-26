@@ -3,7 +3,9 @@ package com.qd.controller.user;
 import com.qd.constant.JwtClaimsConstant;
 import com.qd.context.BaseContext;
 import com.qd.dto.UserLoginDTO1;
+import com.qd.entity.User;
 import com.qd.entity.User1;
+import com.qd.entity.UserUpdateDTO;
 import com.qd.properties.JwtProperties;
 import com.qd.result.Result;
 import com.qd.service.UserService;
@@ -14,9 +16,11 @@ import io.jsonwebtoken.Claims;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -41,10 +45,27 @@ public class UserController {
         return Result.success(userLoginVO);
     }
 
-    private String extractBearerToken(String auth){
-        if (auth == null) return null;
-        if (!auth.toLowerCase().startsWith("bearer ")) return null;
-        return auth.substring(7).trim();
+
+    @PutMapping("/me")
+    @ApiOperation("修改个人基本信息")
+    public Result updateUser(@RequestBody UserUpdateDTO userUpdateDTO) {
+        User user=new User();
+        BeanUtils.copyProperties(userUpdateDTO,user);
+        user.setId(BaseContext.getCurrentId());
+        user.setUpdatedAt(LocalDateTime.now());
+        userService.update(user);
+        return Result.success();
+    }
+
+    @PutMapping("/me/avatar")
+    @ApiOperation("修改头像")
+    public Result updateAvatar(@RequestBody UserUpdateDTO userUpdateDTO) {
+        User user=new User();
+        BeanUtils.copyProperties(userUpdateDTO,user);
+        user.setId(BaseContext.getCurrentId());
+        user.setUpdatedAt(LocalDateTime.now());
+        userService.updateAvatar(user);
+        return Result.success();
     }
 
 //

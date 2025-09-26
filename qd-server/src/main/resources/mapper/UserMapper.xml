@@ -23,4 +23,28 @@
         </where>
     </select>
 
+    <update id="update">
+        update user
+        <set>
+            <if test="username != null">username = #{username},</if>
+            <if test="passwordHash != null">password_hash = #{passwordHash},</if>
+            <if test="email != null">email = #{email},</if>
+            <if test="mobile != null">mobile = #{mobile},</if>
+            <if test="nickname != null">nickname = #{nickname},</if>
+            <if test="avatarUrl != null">avatar_url = #{avatarUrl},</if>
+            <if test="role != null">role = #{role},</if>
+            <if test="roleLevel != null">role_level = #{roleLevel},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="lastLoginAt != null">last_login_at = #{lastLoginAt},</if>
+            <if test="lastLoginIp != null">last_login_ip = #{lastLoginIp},</if>
+            <if test="extra != null">extra = #{extra},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="createdAt != null">created_at = #{createdAt},</if>
+            <if test="updatedAt != null">updated_at = #{updatedAt},</if>
+            <if test="deletedAt != null">deleted_at = #{deletedAt},</if>
+        </set>
+        where id = #{id}
+    </update>
+
+
 </mapper>

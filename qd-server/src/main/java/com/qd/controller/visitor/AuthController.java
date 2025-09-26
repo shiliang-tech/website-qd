@@ -37,7 +37,7 @@ public class AuthController {
     @Autowired
     private JwtProperties jwtProperties;
 
-    @ApiOperation("用户登陆")
+    @ApiOperation("用户登录")
     @PostMapping("/login")
     public Result<UserLoginVO> login(@RequestBody UserLoginDTO userLoginDTO) {
         User user = userService.login(userLoginDTO);

@@ -3,16 +3,14 @@ package com.qd.service.impl;
 import com.alibaba.fastjson.JSONObject;
 import com.qd.constant.MessageConstant;
 import com.qd.constant.StatusConstant;
+import com.qd.context.BaseContext;
 import com.qd.dto.UserLoginDTO;
 import com.qd.dto.UserLoginDTO1;
 import com.qd.dto.UserRegisterDTO;
 import com.qd.entity.Employee;
 import com.qd.entity.User;
 import com.qd.entity.User1;
-import com.qd.exception.AccountLockedException;
-import com.qd.exception.AccountNotFoundException;
-import com.qd.exception.LoginFailedException;
-import com.qd.exception.PasswordErrorException;
+import com.qd.exception.*;
 import com.qd.mapper.UserMapper;
 import com.qd.properties.WeChatProperties;
 import com.qd.service.UserService;
@@ -22,6 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.DigestUtils;
 
 import java.time.LocalDateTime;
@@ -108,18 +107,18 @@ public class UserServiceImpl implements UserService {
         }
 
         //密码比对
-        // TODO 后期需要进行md5加密，然后再进行比对
         password = DigestUtils.md5DigestAsHex(password.getBytes());
         if (!password.equals(user.getPasswordHash())) {
             //密码错误
             throw new PasswordErrorException(MessageConstant.PASSWORD_ERROR);
         }
-
         if (user.getStatus() == StatusConstant.DISABLE) {
             //账号被锁定
             throw new AccountLockedException(MessageConstant.ACCOUNT_LOCKED);
         }
-
+        user.setLastLoginAt(LocalDateTime.now());
+        //TODO 后期需要添加用户ip逻辑
+//        user.setLastLoginIp();
         //3、返回实体对象
         return user;
     }
@@ -134,6 +133,27 @@ public class UserServiceImpl implements UserService {
         UserLoginVO userLoginVO = new UserLoginVO();
         BeanUtils.copyProperties(user, userLoginVO);
         return userLoginVO;
+    }
+
+    /**
+     * 修改个人基本信息
+     * @param user
+     */
+    @Transactional
+    public void update(User user) {
+        User result = userMapper.getByName(user.getUsername());
+        if (result != null && result.getId() != user.getId()) {
+            throw new UserUpdateNotAllowedException(MessageConstant.USERNAME_EXISTS);
+        }
+        userMapper.update(user);
+    }
+
+    /**
+     * 修改个人头像
+     * @param user
+     */
+    public void updateAvatar(User user) {
+        userMapper.update(user);
     }
 
     private String getOpenid(String code) {

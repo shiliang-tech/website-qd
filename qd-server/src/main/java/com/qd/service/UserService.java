@@ -31,4 +31,16 @@ public interface UserService {
      * @return
      */
     UserLoginVO getById(Long id);
+
+    /**
+     * 修改个人基本信息
+     * @param user
+     */
+    void update(User user);
+
+    /**
+     * 修改个人头像
+     * @param user
+     */
+    void updateAvatar(User user);
 }
