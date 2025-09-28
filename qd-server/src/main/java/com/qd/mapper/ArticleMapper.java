@@ -1,6 +1,7 @@
 package com.qd.mapper;
 import com.github.pagehelper.Page;
 import com.qd.dto.ArticlePageQueryDTO;
+import com.qd.entity.Article;
 import com.qd.vo.ArticleDetailVO;
 import com.qd.vo.ArticleVO;
 import org.apache.ibatis.annotations.Mapper;
@@ -23,4 +24,10 @@ public interface ArticleMapper {
      */
     @Select("SELECT * FROM article WHERE id = #{id}")
     ArticleDetailVO getById(long id);
+
+    /**
+     * 新增文章
+     * @param article
+     */
+    void insert(Article article);
 }

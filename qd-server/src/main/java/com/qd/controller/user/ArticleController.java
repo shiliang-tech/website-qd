@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController("userArticleController")
 @RequestMapping("/articles")
 @Slf4j
-@Api(tags = "用户发帖、回复相关接口")
+@Api(tags = "用户发帖相关接口")
 public class ArticleController {
 
 

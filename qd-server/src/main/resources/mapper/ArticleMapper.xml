@@ -49,6 +49,32 @@
         </choose>
     </select>
 
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO article (
+            title, slug, summary, cover_url,
+            content_md, content_html, status,
+            is_top, is_recommend,
+            seo_title, seo_keywords, seo_description,
+            author_id, author_name,
+            main_category_id, main_category_name,
+            tag_ids_csv, tag_names_csv,
+            view_count, like_count, comment_count,
+            published_at, extra, remark,
+            created_at, updated_at, deleted_at
+        )
+        VALUES (
+                   #{title}, #{slug}, #{summary}, #{coverUrl},
+                   #{contentMd}, #{contentHtml}, #{status},
+                   #{isTop}, #{isRecommend},
+                   #{seoTitle}, #{seoKeywords}, #{seoDescription},
+                   #{authorId}, #{authorName},
+                   #{mainCategoryId}, #{mainCategoryName},
+                   #{tagIdsCsv}, #{tagNamesCsv},
+                   #{viewCount}, #{likeCount}, #{commentCount},
+                   #{publishedAt}, #{extra}, #{remark},
+                   #{createdAt}, #{updatedAt}, #{deletedAt}
+               )
+    </insert>
 
 
 

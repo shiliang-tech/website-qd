@@ -1,5 +1,6 @@
 package com.qd.service;
 
+import com.qd.dto.ArticleDTO;
 import com.qd.dto.ArticlePageQueryDTO;
 import com.qd.result.PageResult;
 import com.qd.vo.ArticleDetailVO;
@@ -19,4 +20,10 @@ public interface ArticleService {
      * @return
      */
     ArticleDetailVO getById(Integer id);
+
+    /**
+     * 新增文章
+     * @param articleDTO
+     */
+    void insert(ArticleDTO articleDTO);
 }
