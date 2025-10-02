@@ -77,5 +77,40 @@
     </insert>
 
 
+    <update id="update">
+        UPDATE article
+        <set>
+            <if test="title != null">title = #{title},</if>
+            <if test="slug != null">slug = #{slug},</if>
+            <if test="summary != null">summary = #{summary},</if>
+            <if test="coverUrl != null">cover_url = #{coverUrl},</if>
+            <if test="contentMd != null">content_md = #{contentMd},</if>
+            <if test="contentHtml != null">content_html = #{contentHtml},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="isTop != null">is_top = #{isTop},</if>
+            <if test="isRecommend != null">is_recommend = #{isRecommend},</if>
+            <if test="seoTitle != null">seo_title = #{seoTitle},</if>
+            <if test="seoKeywords != null">seo_keywords = #{seoKeywords},</if>
+            <if test="seoDescription != null">seo_description = #{seoDescription},</if>
+            <if test="authorId != null">author_id = #{authorId},</if>
+            <if test="authorName != null">author_name = #{authorName},</if>
+            <if test="mainCategoryId != null">main_category_id = #{mainCategoryId},</if>
+            <if test="mainCategoryName != null">main_category_name = #{mainCategoryName},</if>
+            <if test="tagIdsCsv != null">tag_ids_csv = #{tagIdsCsv},</if>
+            <if test="tagNamesCsv != null">tag_names_csv = #{tagNamesCsv},</if>
+            <if test="viewCount != null">view_count = #{viewCount},</if>
+            <if test="likeCount != null">like_count = #{likeCount},</if>
+            <if test="commentCount != null">comment_count = #{commentCount},</if>
+            <if test="publishedAt != null">published_at = #{publishedAt},</if>
+            <if test="extra != null">extra = #{extra},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="createdAt != null">created_at = #{createdAt},</if>
+            <if test="updatedAt != null">updated_at = #{updatedAt},</if>
+            <if test="deletedAt != null">deleted_at = #{deletedAt},</if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+
 
 </mapper>

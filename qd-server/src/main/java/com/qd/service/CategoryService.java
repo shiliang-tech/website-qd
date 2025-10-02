@@ -4,6 +4,9 @@ import com.qd.dto.CategoryDTO;
 import com.qd.dto.CategoryPageQueryDTO;
 import com.qd.entity.Category;
 import com.qd.result.PageResult;
+import com.qd.vo.CategoryOverviewVO;
+import com.qd.vo.CategoryVO;
+
 import java.util.List;
 
 public interface CategoryService {
@@ -31,7 +34,7 @@ public interface CategoryService {
      * 修改分类
      * @param categoryDTO
      */
-    void update(CategoryDTO categoryDTO);
+    void update(Long id,CategoryDTO categoryDTO);
 
     /**
      * 启用、禁用分类
@@ -41,9 +44,15 @@ public interface CategoryService {
     void startOrStop(Integer status, Long id);
 
     /**
-     * 根据类型查询分类
-     * @param type
+     * 管理员查看分类概况
      * @return
      */
-    List<Category> list(Integer type);
+    List<CategoryVO> list();
+
+    /**
+     * 查询分类概况
+     * @return
+     */
+    List<CategoryOverviewVO> getOverview();
+
 }

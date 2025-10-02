@@ -93,4 +93,35 @@ public class ArticleServiceImpl implements ArticleService {
 
         articleMapper.insert(article);
     }
+
+    /**
+     * 修改文章
+     * @param articleDTO
+     */
+    public void update(ArticleDTO articleDTO) {
+        Article article = new Article();
+        BeanUtils.copyProperties(articleDTO, article);
+        article.setUpdatedAt(LocalDateTime.now());
+
+        //md文件转html
+        Parser parser = Parser.builder().build();
+        Node document = parser.parse(articleDTO.getContentMd());
+        HtmlRenderer renderer = HtmlRenderer.builder().build();
+        String contentHtml = renderer.render(document);
+        article.setContentHtml(contentHtml);
+
+        articleMapper.update(article);
+    }
+
+    /**
+     * 删除文章
+     * @param id
+     */
+    public void delete(Long id) {
+        Article article = new Article();
+        article.setId(id);
+        article.setDeletedAt(LocalDateTime.now());
+        article.setStatus(3);
+        articleMapper.update(article);
+    }
 }

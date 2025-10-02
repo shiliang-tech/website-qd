@@ -14,6 +14,9 @@ import com.qd.mapper.DishMapper;
 import com.qd.mapper.SetmealMapper;
 import com.qd.result.PageResult;
 import com.qd.service.CategoryService;
+import com.qd.utils.SlugUtil;
+import com.qd.vo.CategoryOverviewVO;
+import com.qd.vo.CategoryVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,14 +49,23 @@ public class CategoryServiceImpl implements CategoryService {
 
         //分类状态默认为禁用状态0
         category.setStatus(StatusConstant.DISABLE);
-
-        //设置创建时间、修改时间、创建人、修改人
-        category.setCreateTime(LocalDateTime.now());
-        category.setUpdateTime(LocalDateTime.now());
-        category.setCreateUser(BaseContext.getCurrentId());
-        category.setUpdateUser(BaseContext.getCurrentId());
-
+        category.setArticleCount(0);
+        category.setSort(findMaxSort() + 1);
+        category.setSlug(SlugUtil.slugifyWithPinyin(category.getName()));
+        category.setCreatedAt(LocalDateTime.now());
+        category.setUpdatedAt(LocalDateTime.now());
         categoryMapper.insert(category);
+    }
+
+    private Integer findMaxSort() {
+        List<CategoryVO> list = categoryMapper.list();
+        Integer maxSort = 0;
+        for (CategoryVO categoryVO : list) {
+            if (categoryVO.getSort() > maxSort) {
+                maxSort = categoryVO.getSort();
+            }
+        }
+        return maxSort;
     }
 
     /**
@@ -73,35 +85,22 @@ public class CategoryServiceImpl implements CategoryService {
      * @param id
      */
     public void deleteById(Long id) {
-        //查询当前分类是否关联了菜品，如果关联了就抛出业务异常
-        Integer count = dishMapper.countByCategoryId(id);
-        if(count > 0){
-            //当前分类下有菜品，不能删除
-            throw new DeletionNotAllowedException(MessageConstant.CATEGORY_BE_RELATED_BY_DISH);
-        }
-
-        //查询当前分类是否关联了套餐，如果关联了就抛出业务异常
-        count = setmealMapper.countByCategoryId(id);
-        if(count > 0){
-            //当前分类下有菜品，不能删除
-            throw new DeletionNotAllowedException(MessageConstant.CATEGORY_BE_RELATED_BY_SETMEAL);
-        }
-
         //删除分类数据
         categoryMapper.deleteById(id);
     }
 
     /**
      * 修改分类
+     *
      * @param categoryDTO
      */
-    public void update(CategoryDTO categoryDTO) {
+    public void update(Long id, CategoryDTO categoryDTO) {
         Category category = new Category();
-        BeanUtils.copyProperties(categoryDTO,category);
+        BeanUtils.copyProperties(categoryDTO, category);
+        category.setId(id);
+        category.setSlug(SlugUtil.slugifyWithPinyin(categoryDTO.getName()));
+        category.setUpdatedAt(LocalDateTime.now());
 
-        //设置修改时间、修改人
-        category.setUpdateTime(LocalDateTime.now());
-        category.setUpdateUser(BaseContext.getCurrentId());
 
         categoryMapper.update(category);
     }
@@ -115,18 +114,25 @@ public class CategoryServiceImpl implements CategoryService {
         Category category = Category.builder()
                 .id(id)
                 .status(status)
-                .updateTime(LocalDateTime.now())
-                .updateUser(BaseContext.getCurrentId())
+//                .updateTime(LocalDateTime.now())
+//                .updateUser(BaseContext.getCurrentId())
                 .build();
         categoryMapper.update(category);
     }
 
     /**
-     * 根据类型查询分类
-     * @param type
+     * 管理员查看分类概况
      * @return
      */
-    public List<Category> list(Integer type) {
-        return categoryMapper.list(type);
+    public List<CategoryVO> list() {
+        return categoryMapper.list();
+    }
+
+    /**
+     * 查询分类概况
+     * @return
+     */
+    public List<CategoryOverviewVO> getOverview() {
+        return categoryMapper.getOverview();
     }
 }

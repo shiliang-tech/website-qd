@@ -26,4 +26,16 @@ public interface ArticleService {
      * @param articleDTO
      */
     void insert(ArticleDTO articleDTO);
+
+    /**
+     * 修改文章
+     * @param articleDTO
+     */
+    void update(ArticleDTO articleDTO);
+
+    /**
+     * 删除文章
+     * @param id
+     */
+    void delete(Long id);
 }

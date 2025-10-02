@@ -30,4 +30,10 @@ public interface ArticleMapper {
      * @param article
      */
     void insert(Article article);
+
+    /**
+     * 编辑文章
+     * @param article
+     */
+    void update(Article article);
 }

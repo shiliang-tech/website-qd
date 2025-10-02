@@ -6,6 +6,8 @@ import com.qd.entity.Category;
 import com.qd.result.PageResult;
 import com.qd.result.Result;
 import com.qd.service.CategoryService;
+import com.qd.vo.CategoryOverviewVO;
+import com.qd.vo.CategoryVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -17,7 +19,7 @@ import java.util.List;
  * 分类管理
  */
 @RestController
-@RequestMapping("/admin/category")
+@RequestMapping("/admin/categories")
 @Api(tags = "分类相关接口")
 @Slf4j
 public class CategoryController {
@@ -26,14 +28,26 @@ public class CategoryController {
     private CategoryService categoryService;
 
     /**
+     * 管理员查看分类概况
+     * @return
+     */
+    @GetMapping
+    @ApiOperation("查看分类概况")
+    public Result<List<CategoryVO>> getCategory() {
+        List<CategoryVO> list = categoryService.list();
+        return Result.success(list);
+    }
+
+
+
+    /**
      * 新增分类
      * @param categoryDTO
      * @return
      */
     @PostMapping
     @ApiOperation("新增分类")
-    public Result<String> save(@RequestBody CategoryDTO categoryDTO){
-        log.info("新增分类：{}", categoryDTO);
+    public Result save(@RequestBody CategoryDTO categoryDTO){
         categoryService.save(categoryDTO);
         return Result.success();
     }
@@ -53,12 +67,13 @@ public class CategoryController {
 
     /**
      * 删除分类
+     *
      * @param id
      * @return
      */
-    @DeleteMapping
+    @DeleteMapping("/{id}")
     @ApiOperation("删除分类")
-    public Result<String> deleteById(Long id){
+    public Result<String> deleteById(@PathVariable Long id) {
         log.info("删除分类：{}", id);
         categoryService.deleteById(id);
         return Result.success();
@@ -69,10 +84,10 @@ public class CategoryController {
      * @param categoryDTO
      * @return
      */
-    @PutMapping
+    @PutMapping("/{id}")
     @ApiOperation("修改分类")
-    public Result<String> update(@RequestBody CategoryDTO categoryDTO){
-        categoryService.update(categoryDTO);
+    public Result<String> update(@PathVariable Long id,@RequestBody CategoryDTO categoryDTO){
+        categoryService.update(id, categoryDTO);
         return Result.success();
     }
 
@@ -89,15 +104,4 @@ public class CategoryController {
         return Result.success();
     }
 
-    /**
-     * 根据类型查询分类
-     * @param type
-     * @return
-     */
-    @GetMapping("/list")
-    @ApiOperation("根据类型查询分类")
-    public Result<List<Category>> list(Integer type){
-        List<Category> list = categoryService.list(type);
-        return Result.success(list);
-    }
 }

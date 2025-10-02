@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
@@ -11,32 +12,22 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Category implements Serializable {
-
+public class Tag implements Serializable {
     private static final long serialVersionUID = 1L;
 
     // 主键ID
     private Long id;
 
-    // 分类名称
+    // 标签名
     private String name;
 
     // 唯一标识 slug
     private String slug;
 
-    // 父分类ID（逻辑外键）
-    private Long parentId;
-
-    // 父分类名快照（冗余）
-    private String parentName;
-
-    // 排序值
-    private Integer sort;
-
-    // 文章数量快照（冗余）
+    // 冗余：文章数量快照
     private Integer articleCount;
 
-    // 状态：1=启用,0=禁用
+    // 状态: 1=启用,0=禁用
     private Integer status;
 
     // 备注
@@ -48,6 +39,6 @@ public class Category implements Serializable {
     // 更新时间
     private LocalDateTime updatedAt;
 
-    // 删除时间（逻辑删除）
+    // 删除时间
     private LocalDateTime deletedAt;
 }

@@ -13,6 +13,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ArticleDTO implements Serializable {
+    //文章id
+    private Long id;
     // 标题
     private String title;
     // 摘要
