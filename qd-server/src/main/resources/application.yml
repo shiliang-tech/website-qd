@@ -17,6 +17,12 @@ spring:
     port: ${qd.redis.port}
     password: ${qd.redis.password}
     database: ${qd.redis.database}
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 20MB       # 单个文件最大尺寸（按需改，比如 20MB）
+      max-request-size: 20MB    # 整个请求最大尺寸（按需改）
+      file-size-threshold: 0    # 大文件直接落盘，避免占内存
 mybatis:
   #mapper配置文件
   mapper-locations: classpath:mapper/*.xml
